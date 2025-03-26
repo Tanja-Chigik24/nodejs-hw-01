@@ -2,12 +2,14 @@ import { createFakeContact } from '../utils/createFakeContact.js';
 import { writeContacts } from '../utils/writeContacts.js';
 import { readContacts } from '../utils/readContacts.js';
 
-const generateContacts = async (number) => {
+export const generateContacts = async (number) => {
+  const contacts = await readContacts();
   for (let i = 1; i <= number; i++) {
     const newContact = createFakeContact();
-    await writeContacts(newContact);
+    contacts.push(newContact);
   }
-  return readContacts;
+  await writeContacts(contacts);
+  return await readContacts();
 };
 
 generateContacts(5);
